@@ -1,5 +1,5 @@
 node {
-    dir("/root/"){
+    dir("/home/jenkins/workspace/for-this-demo/"){
     checkout scm
 
     env.DOCKER_API_VERSION="1.23"
