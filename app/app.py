@@ -1,28 +1,13 @@
 from flask import Flask, render_template, json, request, redirect, session
-from flask.ext.mysql import MySQL
+from flask_ask import Ask, request, session, question, statement
 from werkzeug import generate_password_hash, check_password_hash
 import os
 import re
+import requests
 
 
 mysql = MySQL()
 app = Flask(__name__)
-app.secret_key = 'some_secret_key'
-
-# MySQL configurations
-app.config['MYSQL_DATABASE_USER'] = os.environ['MYSQL_USER']
-app.config['MYSQL_DATABASE_PASSWORD'] = os.environ['MYSQL_PASSWORD']
-app.config['MYSQL_DATABASE_DB'] = os.environ['MYSQL_DB']
-for key in os.environ.keys():
-    if re.match(r'MYSQL.*_TCP_PORT$',key):
-        mysqlDbPort = os.environ[key]
-        app.config['MYSQL_DATABASE_PORT'] = int(mysqlDbPort)
-    if re.match(r'MYSQL.*_TCP_ADDR$',key):
-        mysqlDbHost = os.environ[key]
-        app.config['MYSQL_DATABASE_HOST'] = mysqlDbHost
-
-mysql.init_app(app)
-
 
 @app.route('/')
 def main():
